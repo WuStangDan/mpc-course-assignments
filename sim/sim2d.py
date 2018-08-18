@@ -11,6 +11,7 @@ def sim_run(options, MPC):
     start = time.clock()
     # Simulator Options
     FIG_SIZE = options['FIG_SIZE'] # [Width, Height]
+    OBSTACLES = options['OBSTACLES']
 
     mpc = MPC()
 
@@ -19,8 +20,10 @@ def sim_run(options, MPC):
     u = np.zeros(prediction_horizon*num_inputs)
     bounds = []
 
-    ref_1 = [10,10,0]
-    ref_2 = [10, 2, 3.14159/2]
+    #ref_1 = [10,10,0]
+    #ref_2 = [10, 2, 3.14159/2]
+    ref_1 = [10,0.01,0]
+    ref_2 = [10,0.01,0]
     ref = ref_1
 
     for i in range(prediction_horizon):
@@ -102,6 +105,12 @@ def sim_run(options, MPC):
                         horizontalalignment='center')
     brake_text = ax.text(telem[0]+3, telem[1]-3, 'Reverse', fontsize = 15,
                         horizontalalignment='center')
+
+    # Obstacles
+    if OBSTACLES:
+        patch_obs = mpatches.Circle((mpc.x_obs, mpc.y_obs),0.5)
+        ax.add_patch(patch_obs)
+
     # V Estimate plot.
     # ax2 = fig.add_subplot(gs[0:4, 4:])
     # v_est, = ax2.plot([], [], '-b')
