@@ -70,9 +70,10 @@ def sim_run(options, MPC):
     # Elevator plot settings.
     ax = fig.add_subplot(gs[:8, :8])
 
-    plt.xlim(-2, 15)
-    ax.set_ylim([-3, 15])
-    #plt.xticks([])
+    plt.xlim(-3, 17)
+    ax.set_ylim([-3, 17])
+    plt.xticks(np.arange(0,11, step=2))
+    plt.yticks(np.arange(0,11, step=2))
     plt.title('MPC 2D')
 
     # Time display.
@@ -89,7 +90,7 @@ def sim_run(options, MPC):
     predict, = ax.plot([], [], 'r--', linewidth = 1)
 
     # Car steering and throttle position.
-    telem = [5,10]
+    telem = [3,14]
     patch_wheel = mpatches.Circle((telem[0]-3, telem[1]), 2.2)
     ax.add_patch(patch_wheel)
     wheel_1, = ax.plot([], [], 'k', linewidth = 3)
