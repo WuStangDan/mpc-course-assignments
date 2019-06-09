@@ -16,7 +16,7 @@ class ModelPredictiveControl:
 
     def plant_model(self, prev_state, dt, pedal, steering):
         x_t = prev_state[0]
-        v_t = prev_state[3]
+        v_t = prev_state[3] # m/s
         return [x_t_1, 0, 0, v_t_1]
 
     def cost_function(self,u, *args):
