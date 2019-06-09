@@ -4,6 +4,7 @@ from sim.sim1d import sim_run
 # Simulator options.
 options = {}
 options['FIG_SIZE'] = [8,8]
+options['FULL_RECALCULATE'] = False
 
 class ModelPredictiveControl:
     def __init__(self):
@@ -16,7 +17,7 @@ class ModelPredictiveControl:
     def plant_model(self, prev_state, dt, pedal, steering):
         x_t = prev_state[0]
         v_t = prev_state[3]
-        return [x_t, 0, 0, v_t]
+        return [x_t_1, 0, 0, v_t_1]
 
     def cost_function(self,u, *args):
         state = args[0]
