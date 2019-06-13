@@ -21,7 +21,7 @@ def sim_run(options, MPC):
 
     # Set bounds for inputs bounded optimization.
     for i in range(mpc.horizon):
-        bounds += [[-5, 5]]
+        bounds += [[-1, 1]]
         bounds += [[-0.8, 0.8]]
 
     ref_1 = mpc.reference1
@@ -33,7 +33,6 @@ def sim_run(options, MPC):
     sim_total = 250
     predict_info = [state_i]
 
-    sim_dt = 0.1
     for i in range(1,sim_total+1):
         u = np.delete(u,0)
         u = np.delete(u,0)
@@ -48,7 +47,7 @@ def sim_run(options, MPC):
                                 tol = 1e-5)
         print('Step ' + str(i) + ' of ' + str(sim_total) + '   Time ' + str(round(time.time() - start_time,5)))
         u = u_solution.x
-        y = mpc.plant_model(state_i[-1], sim_dt, u[0], u[1])
+        y = mpc.plant_model(state_i[-1], mpc.dt, u[0], u[1])
         if (i > 130 and ref_2 != None):
             ref = ref_2
         predicted_state = np.array([y])
