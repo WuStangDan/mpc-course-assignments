@@ -12,6 +12,7 @@ def sim_run(options, MPC):
     start = time.clock()
     # Simulator Options
     FIG_SIZE = options['FIG_SIZE'] # [Width, Height]
+    FULL_RECALCULATE = options['FULL_RECALCULATE']
 
     mpc = MPC()
 
@@ -21,7 +22,7 @@ def sim_run(options, MPC):
 
     # Set bounds for inputs bounded optimization.
     for i in range(mpc.horizon):
-        bounds += [[-5, 5]]
+        bounds += [[-1, 1]]
         bounds += [[-0.0, 0.0]]
 
     ref = mpc.reference
@@ -31,13 +32,14 @@ def sim_run(options, MPC):
     sim_total = 250
     predict_info = [state_i]
 
-    sim_dt = 0.1
     for i in range(1,sim_total+1):
         # Reuse old inputs as starting point to decrease run time.
         u = np.delete(u,0)
         u = np.delete(u,0)
         u = np.append(u, u[-2])
         u = np.append(u, u[-2])
+        if (FULL_RECALCULATE):
+            u = np.zeros(mpc.horizon*num_inputs)
         start_time = time.time()
 
         # Non-linear optimization.
@@ -47,7 +49,7 @@ def sim_run(options, MPC):
                                 tol = 1e-5)
         print('Step ' + str(i) + ' of ' + str(sim_total) + '   Time ' + str(round(time.time() - start_time,5)))
         u = u_solution.x
-        y = mpc.plant_model(state_i[-1], sim_dt, u[0], u[1])
+        y = mpc.plant_model(state_i[-1], mpc.dt, u[0], u[1])
         predicted_state = np.array([y])
         for j in range(1, mpc.horizon):
             predicted = mpc.plant_model(predicted_state[-1], mpc.dt, u[2*j], u[2*j+1])
@@ -137,9 +139,9 @@ def sim_run(options, MPC):
         # Car wheels
         steering_wheel(u_i[num,1]*2)
         throttle.set_data([telem[0],telem[0]],
-                        [telem[1]-2, telem[1]-2+max(0,u_i[num,0]/5*4)])
+                        [telem[1]-2, telem[1]-2+max(0,u_i[num,0]/1*4)])
         brake.set_data([telem[0]+3, telem[0]+3],
-                        [telem[1]-2, telem[1]-2+max(0,-u_i[num,0]/5*4)])
+                        [telem[1]-2, telem[1]-2+max(0,-u_i[num,0]/1*4)])
 
         speed = state_i[num,3]*3.6
         speed_text.set_text(str(round(speed,1)))
