@@ -135,7 +135,7 @@ def sim_run(options, MPC):
     def update_plot(num):
         # Car.
         patch_car.set_xy(car_patch_pos(state_i[num,0], state_i[num,1], state_i[num,2]))
-        patch_car._angle = np.rad2deg(state_i[num,2])-90
+        patch_car.angle = np.rad2deg(state_i[num,2])-90
         # Car wheels
         steering_wheel(u_i[num,1]*2)
         throttle.set_data([telem[0],telem[0]],
@@ -152,7 +152,7 @@ def sim_run(options, MPC):
 
 
         patch_goal.set_xy(car_patch_pos(ref[0],ref[1],ref[2]))
-        patch_goal._angle = np.rad2deg(ref[2])-90
+        patch_goal.angle = np.rad2deg(ref[2])-90
 
 
 

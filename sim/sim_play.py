@@ -143,7 +143,7 @@ def sim_run(options, RUN):
     def update_plot(num):
         # Car.
         patch_car.set_xy(car_patch_pos(state_i[num,0], state_i[num,1], state_i[num,2]))
-        patch_car._angle = np.rad2deg(state_i[num,2])-90
+        patch_car.angle = np.rad2deg(state_i[num,2])-90
         # Car wheels
         steering_wheel(u_i[num,1]*2)
         throttle.set_data([telem[0],telem[0]],
@@ -161,10 +161,10 @@ def sim_run(options, RUN):
         # Goal.
         if (num <= 130 or ref_2 == None):
             patch_goal.set_xy(car_patch_pos(ref_1[0],ref_1[1],ref_1[2]))
-            patch_goal._angle = np.rad2deg(ref_1[2])-90
+            patch_goal.angle = np.rad2deg(ref_1[2])-90
         else:
             patch_goal.set_xy(car_patch_pos(ref_2[0],ref_2[1],ref_2[2]))
-            patch_goal._angle = np.rad2deg(ref_2[2])-90
+            patch_goal.angle = np.rad2deg(ref_2[2])-90
 
         #print(str(state_i[num,3]))
         predict.set_data(predict_info[num][:,0],predict_info[num][:,1])
