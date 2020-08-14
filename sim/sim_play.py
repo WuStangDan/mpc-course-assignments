@@ -28,7 +28,7 @@ def plant_model(prev_state, dt, pedal, steering):
     return [x_t, y_t, psi_t, v_t]
 
 def sim_run(options, RUN):
-    start = time.clock()
+    start = time.process_time()
     # Simulator Options
     FIG_SIZE = options['FIG_SIZE'] # [Width, Height]
     OBSTACLES = options['OBSTACLES']
@@ -174,7 +174,7 @@ def sim_run(options, RUN):
         return patch_car, time_text
 
 
-    print("Compute Time: ", round(time.clock() - start, 3), "seconds.")
+    print("Compute Time: ", round(time.process_time() - start, 3), "seconds.")
     # Animation.
     car_ani = animation.FuncAnimation(fig, update_plot, frames=range(1,len(state_i)), interval=100, repeat=True, blit=False)
     #car_ani.save('mpc-video.mp4')

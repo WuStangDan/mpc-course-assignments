@@ -9,7 +9,7 @@ import time
 
 
 def sim_run(options, MPC):
-    start = time.clock()
+    start = time.process_time()
     # Simulator Options
     FIG_SIZE = options['FIG_SIZE'] # [Width, Height]
     FULL_RECALCULATE = options['FULL_RECALCULATE']
@@ -168,7 +168,7 @@ def sim_run(options, MPC):
         return patch_car, time_text
 
 
-    print("Compute Time: ", round(time.clock() - start, 3), "seconds.")
+    print("Compute Time: ", round(time.process_time() - start, 3), "seconds.")
     # Animation.
     car_ani = animation.FuncAnimation(fig, update_plot, frames=range(1,len(state_i)), interval=100, repeat=True, blit=False)
     #car_ani.save('mpc-video.mp4')

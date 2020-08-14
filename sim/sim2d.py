@@ -8,7 +8,7 @@ import time
 
 
 def sim_run(options, MPC):
-    start = time.clock()
+    start = time.process_time()
     # Simulator Options
     FIG_SIZE = options['FIG_SIZE'] # [Width, Height]
     OBSTACLES = options['OBSTACLES']
@@ -131,7 +131,7 @@ def sim_run(options, MPC):
         patch_car.set_xy(car_patch_pos(state_i[num,0], state_i[num,1], state_i[num,2]))
         patch_car.angle = np.rad2deg(state_i[num,2])-90
         # Car wheels
-        print(np.rad2deg(state_i[num,2]))
+        np.rad2deg(state_i[num,2])
         steering_wheel(u_i[num,1]*2)
         throttle.set_data([telem[0],telem[0]],
                         [telem[1]-2, telem[1]-2+max(0,u_i[num,0]/5*4)])
@@ -154,7 +154,7 @@ def sim_run(options, MPC):
         return patch_car, time_text
 
 
-    print("Compute Time: ", round(time.clock() - start, 3), "seconds.")
+    print("Compute Time: ", round(time.process_time() - start, 3), "seconds.")
     # Animation.
     car_ani = animation.FuncAnimation(fig, update_plot, frames=range(1,len(state_i)), interval=100, repeat=True, blit=False)
     #car_ani.save('mpc-video.mp4')
