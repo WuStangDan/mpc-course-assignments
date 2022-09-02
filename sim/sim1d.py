@@ -23,7 +23,7 @@ def sim_run(options, MPC):
     # Set bounds for inputs bounded optimization.
     for i in range(mpc.horizon):
         bounds += [[-1, 1]]
-        bounds += [[-0.0, 0.0]]
+        bounds += [[-0.001, 0.001]]
 
     ref = mpc.reference
 
